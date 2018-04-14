@@ -29,6 +29,9 @@
     <ClInclude Include="imge_bmp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="MyForm2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">

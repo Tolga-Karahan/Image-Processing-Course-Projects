@@ -1,2 +1,5 @@
 ﻿  MyForm.cpp
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(249): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(274): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(276): warning C4018: '<': signed/unsigned mismatch
   Image-Processing.vcxproj -> C:\Users\Tolga\source\repos\Image-Processing\Debug\Image-Processing.exe
