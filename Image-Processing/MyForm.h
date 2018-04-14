@@ -233,7 +233,10 @@ namespace ImageProcessing {
 		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
 		int histogram[256] = { 0 };
 		int equalizedHistogram[256] = { 0 };
+		BYTE lookUpTable[256];
 		int runningSum = 0;
+		int numberOfPixels = Width * Height;
+
 
 		for (int row = 0; row < Height; row++)
 		{
@@ -246,21 +249,16 @@ namespace ImageProcessing {
 		for (int i = 0; i < 256; i++)
 		{
 			runningSum += histogram[i];
-			int index = round(((runningSum / (Width * Height)) * 255));
-			equalizedHistogram[index]++;
+			BYTE newPixelValue = round(((runningSum * 1.0 / numberOfPixels) * 255));
+			equalizedHistogram[newPixelValue] += histogram[i];
+			lookUpTable[i] = newPixelValue;
 		}
 
 		MyForm2^ histogramForm = gcnew MyForm2;
 		histogramForm->equalizeHistogram(histogram, equalizedHistogram);
 		histogramForm->Show();
 
-		for (int row = 0; row < Height; row++)
-		{
-			for (int column = 0; column < Width; column++)
-			{
-				Raw_Intensity[row * Width + column] = equalizedHistogram[Raw_Intensity[row * Width + column]];
-			}
-		}
+		
 
 		this->chart1->Visible = false;
 
@@ -275,6 +273,7 @@ namespace ImageProcessing {
 		{
 			for (column = 0; column < Width; column++)
 			{
+				Raw_Intensity[row * Width + column] = lookUpTable[Raw_Intensity[row * Width + column]];
 				c = Color::FromArgb(Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column]);
 				surface->SetPixel(column, row, c);
 			}
