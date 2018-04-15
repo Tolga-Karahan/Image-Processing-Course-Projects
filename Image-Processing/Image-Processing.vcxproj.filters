@@ -21,6 +21,9 @@
     <ClCompile Include="imge_bmp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Segmentation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyForm.h">
@@ -32,9 +35,15 @@
     <ClInclude Include="MyForm2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Segmentation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MyForm.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MyForm2.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>

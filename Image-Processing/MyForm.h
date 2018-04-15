@@ -5,6 +5,7 @@
 
 #include "imge_bmp.h"
 #include "MyForm2.h"
+#include "Segmentation.h"
 
 namespace ImageProcessing {
 
@@ -57,6 +58,10 @@ namespace ImageProcessing {
 	private: System::Windows::Forms::ToolStripMenuItem^  histogramToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  histogramEqualizationToolStripMenuItem;
 	private: System::Windows::Forms::DataVisualization::Charting::Chart^  chart1;
+	private: System::Windows::Forms::ToolStripMenuItem^  segmentationToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  binarySegmentationToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  euclideanToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  mahalanobisToolStripMenuItem;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 
 
@@ -75,6 +80,10 @@ namespace ImageProcessing {
 			this->histogramOperationsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramEqualizationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->segmentationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->binarySegmentationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->euclideanToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mahalanobisToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
@@ -87,13 +96,13 @@ namespace ImageProcessing {
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
 				this->openToolStripMenuItem,
-					this->histogramOperationsToolStripMenuItem
+					this->histogramOperationsToolStripMenuItem, this->segmentationToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
-			this->menuStrip1->Size = System::Drawing::Size(1024, 24);
+			this->menuStrip1->Size = System::Drawing::Size(1035, 24);
 			this->menuStrip1->TabIndex = 0;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
@@ -128,13 +137,44 @@ namespace ImageProcessing {
 			this->histogramEqualizationToolStripMenuItem->Text = L"Histogram Equalization";
 			this->histogramEqualizationToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::histogramEqualizationToolStripMenuItem_Click);
 			// 
+			// segmentationToolStripMenuItem
+			// 
+			this->segmentationToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->binarySegmentationToolStripMenuItem });
+			this->segmentationToolStripMenuItem->Name = L"segmentationToolStripMenuItem";
+			this->segmentationToolStripMenuItem->Size = System::Drawing::Size(93, 20);
+			this->segmentationToolStripMenuItem->Text = L"Segmentation";
+			// 
+			// binarySegmentationToolStripMenuItem
+			// 
+			this->binarySegmentationToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->euclideanToolStripMenuItem,
+					this->mahalanobisToolStripMenuItem
+			});
+			this->binarySegmentationToolStripMenuItem->Name = L"binarySegmentationToolStripMenuItem";
+			this->binarySegmentationToolStripMenuItem->Size = System::Drawing::Size(184, 22);
+			this->binarySegmentationToolStripMenuItem->Text = L"Binary Segmentation";
+			// 
+			// euclideanToolStripMenuItem
+			// 
+			this->euclideanToolStripMenuItem->Name = L"euclideanToolStripMenuItem";
+			this->euclideanToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->euclideanToolStripMenuItem->Text = L"Euclidean";
+			this->euclideanToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::euclideanToolStripMenuItem_Click);
+			// 
+			// mahalanobisToolStripMenuItem
+			// 
+			this->mahalanobisToolStripMenuItem->Name = L"mahalanobisToolStripMenuItem";
+			this->mahalanobisToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->mahalanobisToolStripMenuItem->Text = L"Mahalanobis";
+			this->mahalanobisToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::mahalanobisToolStripMenuItem_Click);
+			// 
 			// openFileDialog1
 			// 
 			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(12, 27);
+			this->pictureBox1->Location = System::Drawing::Point(0, 27);
 			this->pictureBox1->Name = L"pictureBox1";
 			this->pictureBox1->Size = System::Drawing::Size(480, 473);
 			this->pictureBox1->TabIndex = 1;
@@ -160,7 +200,7 @@ namespace ImageProcessing {
 			series1->Legend = L"Legend1";
 			series1->Name = L"Series1";
 			this->chart1->Series->Add(series1);
-			this->chart1->Size = System::Drawing::Size(480, 473);
+			this->chart1->Size = System::Drawing::Size(503, 478);
 			this->chart1->TabIndex = 3;
 			this->chart1->Text = L"chart1";
 			this->chart1->Visible = false;
@@ -169,7 +209,7 @@ namespace ImageProcessing {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1024, 512);
+			this->ClientSize = System::Drawing::Size(1035, 505);
 			this->Controls->Add(this->chart1);
 			this->Controls->Add(this->pictureBox2);
 			this->Controls->Add(this->pictureBox1);
@@ -274,6 +314,48 @@ namespace ImageProcessing {
 			for (column = 0; column < Width; column++)
 			{
 				Raw_Intensity[row * Width + column] = lookUpTable[Raw_Intensity[row * Width + column]];
+				c = Color::FromArgb(Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column]);
+				surface->SetPixel(column, row, c);
+			}
+		}
+	}
+
+	private: System::Void euclideanToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+		Segmentation segmentation(Raw_Intensity, Width, Height, true);
+		segmentation.doSegmentation();
+
+		this->chart1->Visible = false;
+		unsigned int row, column;
+		Bitmap^ surface = gcnew Bitmap(Width, Height);
+		pictureBox2->Image = surface;
+		Color c;
+		for (row = 0; row < Height; row++)
+		{
+			for (column = 0; column < Width; column++)
+			{
+				c = Color::FromArgb(Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column]);
+				surface->SetPixel(column, row, c);
+			}
+		}
+
+	}
+	private: System::Void mahalanobisToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+		Segmentation segmentation(Raw_Intensity, Width, Height, false);
+		segmentation.doSegmentation();
+
+		this->chart1->Visible = false;
+		unsigned int row, column;
+		Bitmap^ surface = gcnew Bitmap(Width, Height);
+		pictureBox2->Image = surface;
+		Color c;
+		for (row = 0; row < Height; row++)
+		{
+			for (column = 0; column < Width; column++)
+			{
 				c = Color::FromArgb(Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column], Raw_Intensity[row*Width + column]);
 				surface->SetPixel(column, row, c);
 			}

@@ -128,7 +128,7 @@ namespace ImageProcessing {
 			this->Controls->Add(this->chart2);
 			this->Controls->Add(this->chart1);
 			this->Name = L"MyForm2";
-			this->Text = L"MyForm2";
+			this->Text = L"Histogram Equalization";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart1))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->chart2))->EndInit();
 			this->ResumeLayout(false);
@@ -138,20 +138,21 @@ namespace ImageProcessing {
 
 	public: void equalizeHistogram(int* histogram, int* equalizedHistogram)
 	{
+		// chart1 verileri temizle ve yeni seri oluþtur
 		this->chart1->Series->Clear();
 		System::Windows::Forms::DataVisualization::Charting::Series^  series1 =
 			(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 		this->chart1->Series->Add(series1);
-
+		// resmin orjinal histogram deðerlerini charta ekle
 		for (int i = 0; i < 256; i++)
 			series1->Points->AddXY(i, histogram[i]);
 		this->chart1->Visible = true;
-
+		// chart2 verileri temizle ve yeni seri oluþtur
 		this->chart2->Series->Clear();
 		System::Windows::Forms::DataVisualization::Charting::Series^  series2 =
 			(gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 		this->chart2->Series->Add(series2);
-
+		// eþitlenmiþ histogram verilerini charta ekle
 		for (int i = 0; i < 256; i++)
 			series2->Points->AddXY(i, equalizedHistogram[i]);
 		this->chart2->Visible = true;
