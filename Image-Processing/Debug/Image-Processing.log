@@ -1,9 +1,15 @@
 ﻿  MyForm.cpp
-c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(292): warning C4244: 'initializing': conversion from 'double' to 'BYTE', possible loss of data
-c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(312): warning C4018: '<': signed/unsigned mismatch
-c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(314): warning C4018: '<': signed/unsigned mismatch
-c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(334): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(317): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(319): warning C4018: '<': signed/unsigned mismatch
 c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(336): warning C4018: '<': signed/unsigned mismatch
-c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(355): warning C4018: '<': signed/unsigned mismatch
-c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(357): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(338): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(409): warning C4244: 'initializing': conversion from 'double' to 'BYTE', possible loss of data
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(429): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(431): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(468): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(470): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(497): warning C4101: 'buffer': unreferenced local variable
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(513): warning C4101: 'buffer': unreferenced local variable
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(531): warning C4101: 'buffer': unreferenced local variable
+c:\users\tolga\source\repos\image-processing\image-processing\myform.h(491): warning C4700: uninitialized local variable 'buffer' used
   Image-Processing.vcxproj -> C:\Users\Tolga\source\repos\Image-Processing\Debug\Image-Processing.exe

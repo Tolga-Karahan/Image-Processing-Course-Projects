@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -134,11 +135,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Clustering.cpp" />
+    <ClCompile Include="Filter.cpp" />
     <ClCompile Include="imge_bmp.cpp" />
     <ClCompile Include="MyForm.cpp" />
+    <ClCompile Include="MyVector.cpp" />
     <ClCompile Include="Segmentation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Clustering.h" />
+    <ClInclude Include="Filter.h" />
     <ClInclude Include="imge_bmp.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
@@ -146,6 +152,7 @@
     <ClInclude Include="MyForm2.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="MyVector.h" />
     <ClInclude Include="Segmentation.h" />
   </ItemGroup>
   <ItemGroup>
