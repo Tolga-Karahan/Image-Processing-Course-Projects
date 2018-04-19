@@ -30,3 +30,4 @@ Class ImageProcessing.MyForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldI
   Methods:
     displayRGB(Byte*): PrivateScope, Public, HideBySig
     displayGray(Byte*): PrivateScope, Public, HideBySig
+    update(Byte*, Byte, Byte): PrivateScope, Public, HideBySig

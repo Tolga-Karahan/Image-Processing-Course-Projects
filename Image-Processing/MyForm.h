@@ -72,6 +72,8 @@ namespace ImageProcessing {
 	private: System::Windows::Forms::ToolStripMenuItem^  erosionToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  openingToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  closingToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  convertToIntensityToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  labelingToolStripMenuItem;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 
 
@@ -87,6 +89,7 @@ namespace ImageProcessing {
 			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->openToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->convertToIntensityToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramOperationsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramEqualizationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -106,6 +109,7 @@ namespace ImageProcessing {
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
+			this->labelingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -114,9 +118,10 @@ namespace ImageProcessing {
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
 				this->openToolStripMenuItem,
-					this->histogramOperationsToolStripMenuItem, this->segmentationToolStripMenuItem, this->clusteringToolStripMenuItem, this->morphologicalOperationsToolStripMenuItem
+					this->histogramOperationsToolStripMenuItem, this->segmentationToolStripMenuItem, this->clusteringToolStripMenuItem, this->morphologicalOperationsToolStripMenuItem,
+					this->labelingToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
@@ -126,10 +131,18 @@ namespace ImageProcessing {
 			// 
 			// openToolStripMenuItem
 			// 
+			this->openToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->convertToIntensityToolStripMenuItem });
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
 			this->openToolStripMenuItem->Size = System::Drawing::Size(48, 20);
 			this->openToolStripMenuItem->Text = L"Open";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::openToolStripMenuItem_Click);
+			// 
+			// convertToIntensityToolStripMenuItem
+			// 
+			this->convertToIntensityToolStripMenuItem->Name = L"convertToIntensityToolStripMenuItem";
+			this->convertToIntensityToolStripMenuItem->Size = System::Drawing::Size(178, 22);
+			this->convertToIntensityToolStripMenuItem->Text = L"Convert to Intensity";
+			this->convertToIntensityToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToIntensityToolStripMenuItem_Click);
 			// 
 			// histogramOperationsToolStripMenuItem
 			// 
@@ -222,28 +235,28 @@ namespace ImageProcessing {
 			// dilationToolStripMenuItem
 			// 
 			this->dilationToolStripMenuItem->Name = L"dilationToolStripMenuItem";
-			this->dilationToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->dilationToolStripMenuItem->Size = System::Drawing::Size(120, 22);
 			this->dilationToolStripMenuItem->Text = L"Dilation";
 			this->dilationToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::dilationToolStripMenuItem_Click);
 			// 
 			// erosionToolStripMenuItem
 			// 
 			this->erosionToolStripMenuItem->Name = L"erosionToolStripMenuItem";
-			this->erosionToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->erosionToolStripMenuItem->Size = System::Drawing::Size(120, 22);
 			this->erosionToolStripMenuItem->Text = L"Erosion";
 			this->erosionToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::erosionToolStripMenuItem_Click);
 			// 
 			// openingToolStripMenuItem
 			// 
 			this->openingToolStripMenuItem->Name = L"openingToolStripMenuItem";
-			this->openingToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->openingToolStripMenuItem->Size = System::Drawing::Size(120, 22);
 			this->openingToolStripMenuItem->Text = L"Opening";
 			this->openingToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::openingToolStripMenuItem_Click);
 			// 
 			// closingToolStripMenuItem
 			// 
 			this->closingToolStripMenuItem->Name = L"closingToolStripMenuItem";
-			this->closingToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->closingToolStripMenuItem->Size = System::Drawing::Size(120, 22);
 			this->closingToolStripMenuItem->Text = L"Closing";
 			this->closingToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::closingToolStripMenuItem_Click);
 			// 
@@ -284,6 +297,13 @@ namespace ImageProcessing {
 			this->chart1->Text = L"chart1";
 			this->chart1->Visible = false;
 			// 
+			// labelingToolStripMenuItem
+			// 
+			this->labelingToolStripMenuItem->Name = L"labelingToolStripMenuItem";
+			this->labelingToolStripMenuItem->Size = System::Drawing::Size(64, 20);
+			this->labelingToolStripMenuItem->Text = L"Labeling";
+			this->labelingToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::labelingToolStripMenuItem_Click);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -306,7 +326,7 @@ namespace ImageProcessing {
 
 		}
 
-		// Renkli resmi ekrana bas
+	// Renkli resmi ekrana bas
 	public: void displayRGB(BYTE* img)
 	{
 		this->chart1->Visible = false;
@@ -325,7 +345,7 @@ namespace ImageProcessing {
 		}
 	}
 
-			// Gri resmi ekrana bas
+	// Gri resmi ekrana bas
 	public: void displayGray(BYTE* img)
 	{
 		this->chart1->Visible = false;
@@ -441,24 +461,26 @@ namespace ImageProcessing {
 
 		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
 		Segmentation segmentation(Raw_Intensity, Width, Height, true);
-		segmentation.doSegmentation();
+		BYTE* buffer = segmentation.doSegmentation();
 		
-		displayGray(Raw_Intensity);
-
+		displayGray(buffer);
+		Raw_Intensity = NULL;
 	}
 	private: System::Void mahalanobisToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
 		Segmentation segmentation(Raw_Intensity, Width, Height, false);
-		segmentation.doSegmentation();
+		BYTE* buffer = segmentation.doSegmentation();
 
-		displayGray(Raw_Intensity);
+		displayGray(buffer);
+		Raw_Intensity = NULL;
 	}
 	
 	private: System::Void euclideanToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		Clustering cluster(Buffer, Width, Height);
 		cluster.makeClustering();
+		BYTE* buffer = cluster.getIMG();
 
 		this->chart1->Visible = false;
 		unsigned int row, column;
@@ -470,7 +492,7 @@ namespace ImageProcessing {
 			for (column = 0; column < Width; column++)
 			{
 				int index = (row * Width + column) * 3;
-				c = Color::FromArgb(Buffer[index + 2], Buffer[index + 1], Buffer[index]);
+				c = Color::FromArgb(buffer[index + 2], buffer[index + 1], buffer[index]);
 				surface->SetPixel(column , Height - row - 1, c);
 			}
 		}
@@ -482,25 +504,31 @@ namespace ImageProcessing {
 		// Mask matrisi
 		BYTE mask[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 		// Resim zaten açýlmýþsa tekrar açma
-		if(Raw_Intensity == NULL)
+		if (Raw_Intensity == NULL)
+		{
 			Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+			Segmentation seg(Raw_Intensity, Width, Height, true);
+			Raw_Intensity = seg.doSegmentation();
+		}
 		
 		Filter filter(Raw_Intensity, Width, Height);
 		Raw_Intensity = filter.dilation(mask);
 
-		displayGray(buffer);
+		displayGray(Raw_Intensity);
 	}
 
 	private: System::Void erosionToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		// Filtreleme sonucunun tutulacaðý buffer
-		BYTE* buffer;
 		// Mask matrisi
 		BYTE mask[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
 		// Resim zaten açýlmýþsa tekrar açma
-		if(Raw_Intensity == NULL)
+		if (Raw_Intensity == NULL)
+		{
 			Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
-		
+			Segmentation seg(Raw_Intensity, Width, Height, true);
+			Raw_Intensity = seg.doSegmentation();
+		}
 		Filter filter(Raw_Intensity, Width, Height);
 		Raw_Intensity = filter.erosion(mask);
 		
@@ -509,13 +537,16 @@ namespace ImageProcessing {
 	}
 	private: System::Void openingToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		// Filtreleme sonucunun tutulacaðý buffer
-		BYTE* buffer;
 		// Mask matrisi
 		BYTE mask[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
 		// Resim zaten açýlmýþsa tekrar açma
-		if(Raw_Intensity == NULL)
+		if (Raw_Intensity == NULL)
+		{
 			Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+			Segmentation seg(Raw_Intensity, Width, Height, true);
+			Raw_Intensity = seg.doSegmentation();
+		}
 
 		Filter filter(Raw_Intensity, Width, Height);
 		Raw_Intensity = filter.erosion(mask);
@@ -526,14 +557,16 @@ namespace ImageProcessing {
 	}
 	private: System::Void closingToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
-
-		// Filtreleme sonucunun tutulacaðý buffer
-		BYTE* buffer;
 		// Mask matrisi
 		BYTE mask[9] = { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+
 		// Resim zaten açýlmýþsa tekrar açma
 		if (Raw_Intensity == NULL)
+		{
 			Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+			Segmentation seg(Raw_Intensity, Width, Height, true);
+			Raw_Intensity = seg.doSegmentation();
+		}
 
 		Filter filter(Raw_Intensity, Width, Height);
 		Raw_Intensity = filter.dilation(mask);
@@ -541,6 +574,100 @@ namespace ImageProcessing {
 		Raw_Intensity = filter.erosion(mask);
 
 		displayGray(Raw_Intensity);
+	}
+	private: System::Void convertToIntensityToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+	}
+	private: System::Void labelingToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+		// etiket numarasý
+		int label = 1;
+
+		// etiketlerin tutulacaðý dizi
+		BYTE* labels = new BYTE[Width * Height];
+
+		// etiketleri tutan diziyi sýfýrla
+		for (int i = 0; i < Height; i++)
+			for (int j = 0; j < Width; j++)
+				labels[i * Width + j] = 0;
+
+		// Resmi aç ve ikili görüntüye çevir
+		if (Raw_Intensity == NULL)
+		{
+			Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+			Segmentation seg(Raw_Intensity, Width, Height, true);
+			Raw_Intensity = seg.doSegmentation();
+		}
+
+		for (int row = 1; row < Height - 1; row++)
+		{
+			for (int column = 1; column < Width - 1; column++)
+			{
+				int index = (row * Width + column);
+
+				// piksel içeriði beyazsa sonraki piksele geç
+				if (Raw_Intensity[index] == 255)
+					continue;
+				
+				// üst ve alt komþularý al
+				BYTE neighborUp = labels[index - Width];
+				BYTE neighborLeft = labels[index - 1];
+
+				if (neighborUp == 0 && neighborLeft == 0)
+				{
+					labels[index] = label++;
+				}
+				else
+				{
+					if (neighborUp == 0)
+						labels[index] = neighborLeft;
+					else if (neighborLeft == 0)
+						labels[index] = neighborUp;
+					else
+					{
+						if (neighborUp < neighborLeft)
+						{
+							labels[index] = neighborUp;
+							// küçük olan etiket ile deðiþtir
+							update(labels, neighborLeft, neighborUp);
+							// etiket sayýsýný azalt
+							label--;
+						}
+						else if(neighborLeft < neighborUp)
+						{
+							labels[index] = neighborLeft;
+							// küçük olan etiket ile deðiþtir
+							update(labels, neighborUp, neighborLeft);
+							// etiket sayýsýný azalt
+							label--;
+						}
+						else
+						{
+							labels[index] = neighborUp;
+						}
+					}
+				}
+			}
+		}
+
+
+		MessageBox::Show(Convert::ToString(label - 1) + " objects are found.");
+	}
+
+	public: void update(BYTE* labels, BYTE toBeReplaced, BYTE replaceWith)
+	{
+		for (int row = 0; row < Height; row++)
+		{
+			for (int column = 0; column < Width; column++)
+			{
+				int index = (row * Width + column);
+
+				// etiketi deðiþtir
+				if (labels[index] == toBeReplaced)
+					labels[index] = replaceWith;
+			}
+		}
 	}
 };
 }

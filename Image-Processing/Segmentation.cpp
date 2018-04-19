@@ -19,6 +19,8 @@ Segmentation::Segmentation(BYTE* img, int width, int height, bool isEuclidean) {
 	for (int i = 0; i < width; i++)
 		for (int j = 0; j < height; j++)
 			histogram[img[width*i + j]]++;
+
+	buffer = new BYTE[width * height];
 }
 
 Segmentation::~Segmentation() {
@@ -101,7 +103,7 @@ int Segmentation::getThreshold() {
 	return threshold;
 }
 
-void Segmentation::doSegmentation() {
+BYTE* Segmentation::doSegmentation() {
 
 	int threshold;
 	threshold = getThreshold();
@@ -109,10 +111,12 @@ void Segmentation::doSegmentation() {
 	for (int i = 0; i<width; i++)
 		for (int j = 0; j < height; j++) {
 			if (img[width*i + j] < threshold)
-				img[width*i + j] = 0;
+				buffer[width*i + j] = 0;
 			else
-				img[width*i + j] = 255;
+				buffer[width*i + j] = 255;
 		}
+
+	return buffer;
 }
 
 int Segmentation::getSD(int distance[], int threshold, int label) {

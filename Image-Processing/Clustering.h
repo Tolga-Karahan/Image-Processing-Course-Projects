@@ -8,6 +8,7 @@
 class Clustering {
 
 	BYTE* img;
+	BYTE* buffer;
 	int width;
 	int height;
 

@@ -7,6 +7,7 @@
 class Segmentation {
 
 	BYTE* img;
+	BYTE* buffer;
 	int width;
 	int height;
 	int* histogram;
@@ -16,7 +17,7 @@ public:
 	Segmentation(BYTE* img, int width, int height, bool isEuclidean);
 	~Segmentation();
 	int getThreshold();
-	void doSegmentation();
+	BYTE* doSegmentation();
 	int getSD(int distance[], int threshold, int label);
 	int getMD(int sd, int threshold, int value);
 	int getEuclidean(int threshold, int value);

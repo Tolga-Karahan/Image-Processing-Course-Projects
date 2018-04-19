@@ -14,6 +14,9 @@ Clustering::Clustering(BYTE* img, int width, int height) {
 	mean1.setPoints(255, 0, 0);
 	mean2.setPoints(0, 255, 0);
 	mean3.setPoints(0, 0, 255);
+
+	// Sonucun tutulacaðý bufferý oluþtur
+	buffer = new BYTE[width * height * 3];
 }
 
 Clustering::~Clustering() {}
@@ -99,7 +102,7 @@ int Clustering::findMin(int d1, int d2, int d3) {
 }
 
 BYTE* Clustering::getIMG() {
-	return img;
+	return buffer;
 }
 
 // Belirlenen küme merkezlerine yakýnlýða göre renklendir
@@ -119,23 +122,24 @@ void Clustering::assignRGB() {
 			int min = findMin(d1, d2, d3);
 
 			if (min == d1) {
-				img[(i*width + j) * 3] = 0;
-				img[(i*width + j) * 3 + 1] = 153;
-				img[(i*width + j) * 3 + 2] = 0;
+				buffer[(i*width + j) * 3] = 0;
+				buffer[(i*width + j) * 3 + 1] = 153;
+				buffer[(i*width + j) * 3 + 2] = 0;
 			}
 
 			else if (min == d2) {
-				img[(i*width + j) * 3] = 0;
-				img[(i*width + j) * 3 + 1] = 255;
-				img[(i*width + j) * 3 + 2] = 255;
+				buffer[(i*width + j) * 3] = 0;
+				buffer[(i*width + j) * 3 + 1] = 255;
+				buffer[(i*width + j) * 3 + 2] = 255;
 			}
 
 			else if (min == d3) {
-				img[(i*width + j) * 3] = 127;
-				img[(i*width + j) * 3 + 1] = 0;
-				img[(i*width + j) * 3 + 2] = 255;
+				buffer[(i*width + j) * 3] = 127;
+				buffer[(i*width + j) * 3 + 1] = 0;
+				buffer[(i*width + j) * 3 + 2] = 255;
 			}
 
 		}
 	}
+
 }
