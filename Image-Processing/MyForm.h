@@ -1,6 +1,8 @@
 #pragma once
 #include <atlstr.h>
 #include <windows.h>
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "imge_bmp.h"
 #include "MyForm2.h"
 #include "Segmentation.h"
@@ -72,8 +74,11 @@ namespace ImageProcessing {
 	private: System::Windows::Forms::ToolStripMenuItem^  erosionToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  openingToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  closingToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  convertToIntensityToolStripMenuItem;
+
 	private: System::Windows::Forms::ToolStripMenuItem^  labelingToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  kThresholdingToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  edgeDetectionToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  cannyEdgeToolStripMenuItem;
 	private: System::Windows::Forms::PictureBox^  pictureBox1;
 
 
@@ -89,7 +94,6 @@ namespace ImageProcessing {
 			System::Windows::Forms::DataVisualization::Charting::Series^  series1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Series());
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
 			this->openToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->convertToIntensityToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramOperationsToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->histogramEqualizationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -97,6 +101,7 @@ namespace ImageProcessing {
 			this->binarySegmentationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->euclideanToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mahalanobisToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->kThresholdingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->clusteringToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->euclideanToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mahalanobisToolStripMenuItem1 = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -105,11 +110,13 @@ namespace ImageProcessing {
 			this->erosionToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->closingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->labelingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
 			this->pictureBox2 = (gcnew System::Windows::Forms::PictureBox());
 			this->chart1 = (gcnew System::Windows::Forms::DataVisualization::Charting::Chart());
-			this->labelingToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->edgeDetectionToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->cannyEdgeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox2))->BeginInit();
@@ -118,10 +125,10 @@ namespace ImageProcessing {
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(7) {
 				this->openToolStripMenuItem,
 					this->histogramOperationsToolStripMenuItem, this->segmentationToolStripMenuItem, this->clusteringToolStripMenuItem, this->morphologicalOperationsToolStripMenuItem,
-					this->labelingToolStripMenuItem
+					this->labelingToolStripMenuItem, this->edgeDetectionToolStripMenuItem
 			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
@@ -131,18 +138,10 @@ namespace ImageProcessing {
 			// 
 			// openToolStripMenuItem
 			// 
-			this->openToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->convertToIntensityToolStripMenuItem });
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
 			this->openToolStripMenuItem->Size = System::Drawing::Size(48, 20);
 			this->openToolStripMenuItem->Text = L"Open";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::openToolStripMenuItem_Click);
-			// 
-			// convertToIntensityToolStripMenuItem
-			// 
-			this->convertToIntensityToolStripMenuItem->Name = L"convertToIntensityToolStripMenuItem";
-			this->convertToIntensityToolStripMenuItem->Size = System::Drawing::Size(178, 22);
-			this->convertToIntensityToolStripMenuItem->Text = L"Convert to Intensity";
-			this->convertToIntensityToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::convertToIntensityToolStripMenuItem_Click);
 			// 
 			// histogramOperationsToolStripMenuItem
 			// 
@@ -170,7 +169,10 @@ namespace ImageProcessing {
 			// 
 			// segmentationToolStripMenuItem
 			// 
-			this->segmentationToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->binarySegmentationToolStripMenuItem });
+			this->segmentationToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {
+				this->binarySegmentationToolStripMenuItem,
+					this->kThresholdingToolStripMenuItem
+			});
 			this->segmentationToolStripMenuItem->Name = L"segmentationToolStripMenuItem";
 			this->segmentationToolStripMenuItem->Size = System::Drawing::Size(93, 20);
 			this->segmentationToolStripMenuItem->Text = L"Segmentation";
@@ -198,6 +200,13 @@ namespace ImageProcessing {
 			this->mahalanobisToolStripMenuItem->Size = System::Drawing::Size(142, 22);
 			this->mahalanobisToolStripMenuItem->Text = L"Mahalanobis";
 			this->mahalanobisToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::mahalanobisToolStripMenuItem_Click);
+			// 
+			// kThresholdingToolStripMenuItem
+			// 
+			this->kThresholdingToolStripMenuItem->Name = L"kThresholdingToolStripMenuItem";
+			this->kThresholdingToolStripMenuItem->Size = System::Drawing::Size(184, 22);
+			this->kThresholdingToolStripMenuItem->Text = L"K - Thresholding";
+			this->kThresholdingToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::kThresholdingToolStripMenuItem_Click);
 			// 
 			// clusteringToolStripMenuItem
 			// 
@@ -260,6 +269,13 @@ namespace ImageProcessing {
 			this->closingToolStripMenuItem->Text = L"Closing";
 			this->closingToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::closingToolStripMenuItem_Click);
 			// 
+			// labelingToolStripMenuItem
+			// 
+			this->labelingToolStripMenuItem->Name = L"labelingToolStripMenuItem";
+			this->labelingToolStripMenuItem->Size = System::Drawing::Size(64, 20);
+			this->labelingToolStripMenuItem->Text = L"Labeling";
+			this->labelingToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::labelingToolStripMenuItem_Click);
+			// 
 			// openFileDialog1
 			// 
 			this->openFileDialog1->FileName = L"openFileDialog1";
@@ -297,12 +313,19 @@ namespace ImageProcessing {
 			this->chart1->Text = L"chart1";
 			this->chart1->Visible = false;
 			// 
-			// labelingToolStripMenuItem
+			// edgeDetectionToolStripMenuItem
 			// 
-			this->labelingToolStripMenuItem->Name = L"labelingToolStripMenuItem";
-			this->labelingToolStripMenuItem->Size = System::Drawing::Size(64, 20);
-			this->labelingToolStripMenuItem->Text = L"Labeling";
-			this->labelingToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::labelingToolStripMenuItem_Click);
+			this->edgeDetectionToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->cannyEdgeToolStripMenuItem });
+			this->edgeDetectionToolStripMenuItem->Name = L"edgeDetectionToolStripMenuItem";
+			this->edgeDetectionToolStripMenuItem->Size = System::Drawing::Size(99, 20);
+			this->edgeDetectionToolStripMenuItem->Text = L"Edge Detection";
+			// 
+			// cannyEdgeToolStripMenuItem
+			// 
+			this->cannyEdgeToolStripMenuItem->Name = L"cannyEdgeToolStripMenuItem";
+			this->cannyEdgeToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->cannyEdgeToolStripMenuItem->Text = L"Canny Edge";
+			this->cannyEdgeToolStripMenuItem->Click += gcnew System::EventHandler(this, &MyForm::cannyEdgeToolStripMenuItem_Click);
 			// 
 			// MyForm
 			// 
@@ -378,9 +401,21 @@ namespace ImageProcessing {
 			pictureBox1->Width = Width;
 			pictureBox1->Height = Height;
 			pictureBox1->ImageLocation = openFileDialog1->FileName;
-
+			Raw_Intensity = NULL;
 		}
 		else MessageBox::Show("Couldn't open the file.");
+
+		String^ response = Microsoft::VisualBasic::Interaction::InputBox("Is converting to intensity required? Y/N?", "Convert to Intensity", "", 500, 300);
+		
+		if (response->Empty)
+		{
+			// do nothing
+		}
+		else if (Convert::ToChar(response) == 'Y')
+		{
+			Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+			MessageBox::Show("Image is converted to intensity");
+		}
 	}
 	
 	private: System::Void histogramToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -575,10 +610,7 @@ namespace ImageProcessing {
 
 		displayGray(Raw_Intensity);
 	}
-	private: System::Void convertToIntensityToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-
-		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
-	}
+	
 	private: System::Void labelingToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
 		// etiket numarasý
@@ -668,6 +700,238 @@ namespace ImageProcessing {
 					labels[index] = replaceWith;
 			}
 		}
+	}
+	private: System::Void kThresholdingToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+		String^ input = Microsoft::VisualBasic::Interaction::InputBox("Enter the k value", "K - Means", "", 500, 300);
+		Segmentation seg(Raw_Intensity, Width, Height, true);
+		BYTE* buffer = seg.KThresholding(Convert::ToInt32(input));
+		displayGray(buffer);
+	}
+	private: System::Void cannyEdgeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		
+		BYTE* magnitude = new BYTE[Width*Height];
+		double* orientation = new double[Width*Height];
+		BYTE* edgeImage = new BYTE[Width*Height];
+
+		// Gri resme cevir
+		Raw_Intensity = ConvertBMPToIntensity(Buffer, Width, Height);
+
+		// filtreleme islemleri icin nesne olustur
+		Filter filtering(Raw_Intensity, Width, Height);
+		
+		// bulaniklastir
+		double gaussian[] = { 0.0625, 0.125, 0.0625, 0.0125, 0.25, 0.0125, 0.0625, 0.0125, 0.0625 };
+		filtering.filtering(gaussian);
+		
+		// dikey eksende gradienti hesapla
+		BYTE verticalSobel[9] = { -1, -2, -1, 0, 0, 0, 1, 2, 1 };
+		BYTE* verticalGradient = filtering.filtering(verticalSobel);
+
+		// yatay eksende gradienti hesapla
+		BYTE horizontalSobel[9] = { -1, 0, 1, -2, 0, 2, -1, 0, 1 };
+		BYTE* horizontalGradient = filtering.filtering(horizontalSobel);
+
+		// genlik ve yon bilgisini hesapla
+		for (int row = 0; row < Height; row++)
+		{
+			for (int column = 0; column < Width; column++)
+			{
+				int index = row * Width + column;
+				magnitude[index] = sqrt(pow(verticalGradient[index], 2) + pow(horizontalGradient[index], 2));
+				orientation[index] = atan(1.0 * verticalGradient[index] / horizontalGradient[index]) * 180 / M_PI;
+			}
+		}
+
+		// non-maximum supression
+		for (int row = 0; row < Height; row++)
+		{
+			for (int column = 0; column < Width; column++)
+			{
+				int index = row * Width + column;
+				double angle = orientation[index];
+
+				if (angle >= 22.5 && angle <= 67.5)
+				{
+					// merkez pikseli sol ust ve sag alt komsu pikseller ile karsilastir
+					int topLeftPixel = Raw_Intensity[index - Width - 1];
+					int bottomRightPixel = Raw_Intensity[index + Width + 1];
+					int centralPixel = Raw_Intensity[index];
+
+					// merkez piksel komsulardan buyukse kenar olarak isaretlenir
+					// komsulardan kucukse yok edilir(supression)
+					if (centralPixel > topLeftPixel && centralPixel > bottomRightPixel)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}		
+				}
+
+				else if (angle >= 67.5 && angle <= 112.5)
+				{
+					// merkez pikseli ust ve alt komsu pikseller ile karsilastir
+					int abovePixel = Raw_Intensity[index - Width];
+					int belowPixel = Raw_Intensity[index + Width];
+					int centralPixel = Raw_Intensity[index];
+
+					// merkez piksel komsulardan buyukse kenar olarak isaretlenir
+					// komsulardan kucukse yok edilir(supression)
+					if (centralPixel > abovePixel && centralPixel > belowPixel)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}
+				}
+
+				else if (angle >= 112.5 && angle <= 157.5)
+				{
+					// merkez pikseli sag ust ve sol alt komsu pikseller ile karsilastir
+					int topRightPixel = Raw_Intensity[index - Width + 1];
+					int bottomLeftPixel = Raw_Intensity[index + Width - 1];
+					int centralPixel = Raw_Intensity[index];
+
+					// merkez piksel komsulardan buyukse kenar olarak isaretlenir
+					// komsulardan kucukse yok edilir(supression)
+					if (centralPixel > topRightPixel && centralPixel > bottomLeftPixel)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}
+				}
+
+				// 0 - 22.5 ve 157.5 - 180 derece arasi degerlendirilir
+				else
+				{
+					// merkez pikseli sol ve sag komsu pikseller ile karsilastir
+					int leftPixel = Raw_Intensity[index - 1];
+					int rightPixel = Raw_Intensity[index + 1];
+					int centralPixel = Raw_Intensity[index];
+
+					// merkez piksel komsulardan buyukse kenar olarak isaretlenir
+					// komsulardan kucukse yok edilir(supression)
+					if (centralPixel > leftPixel && centralPixel > rightPixel)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}
+				}
+				
+			}
+		}
+
+		// hysteresis thresholding 
+		// bu sefer gradient yonune degil kenar yonundeki piksellere bakariz
+		for (int row = 0; row < Height; row++)
+		{
+			for (int column = 0; column < Width; column++)
+			{
+				int index = row * Width + column;
+				// kenar degilse sonraki piksel ile devam et
+				if (Raw_Intensity[index] == 255) continue;
+				double angle = orientation[index];
+
+				if (angle >= 22.5 && angle <= 67.5)
+				{
+					int topRightIndex = index - Width + 1;
+					int bottomLeftIndex = index + Width - 1;
+					
+					// komsu pikseller merkez pikselle ayni gradient acisina mi sahip?
+					bool isOrientationEquals = orientation[index] == orientation[topRightIndex] ||
+						orientation[index] == orientation[bottomLeftIndex];
+
+					// komsu pikseller maksimum mu?
+					bool wasntBeSupressed = edgeImage[topRightIndex] == 0 || edgeImage[bottomLeftIndex] == 0;
+
+					if (isOrientationEquals && wasntBeSupressed)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}				
+				}
+
+				else if (angle >= 67.5 && angle <= 112.5)
+				{
+					int leftIndex = index - 1;
+					int rightIndex = index + 1;
+
+					// komsu pikseller merkez pikselle ayni gradient acisina mi sahip?
+					bool isOrientationEquals = orientation[index] == orientation[leftIndex] ||
+						orientation[index] == orientation[rightIndex];
+
+					// komsu pikseller maksimum mu?
+					bool wasntBeSupressed = edgeImage[leftIndex] == 0 || edgeImage[rightIndex] == 0;
+
+					if (isOrientationEquals && wasntBeSupressed)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}
+				}
+
+				else if (angle >= 112.5 && angle <= 157.5)
+				{
+					int topLeftIndex = index - 1;
+					int bottomRightIndex = index + 1;
+
+					// komsu pikseller merkez pikselle ayni gradient acisina mi sahip?
+					bool isOrientationEquals = orientation[index] == orientation[topLeftIndex] ||
+						orientation[index] == orientation[bottomRightIndex];
+
+					// komsu pikseller maksimum mu?
+					bool wasntBeSupressed = edgeImage[topLeftIndex] == 0 || edgeImage[bottomRightIndex] == 0;
+
+					if (isOrientationEquals && wasntBeSupressed)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}
+				}
+
+				else
+				{
+					int aboveIndex = index - 1;
+					int belowIndex = index + 1;
+
+					// komsu pikseller merkez pikselle ayni gradient acisina mi sahip?
+					bool isOrientationEquals = orientation[index] == orientation[aboveIndex] ||
+						orientation[index] == orientation[belowIndex];
+
+					// komsu pikseller maksimum mu?
+					bool wasntBeSupressed = edgeImage[aboveIndex] == 0 || edgeImage[belowIndex] == 0;
+
+					if (isOrientationEquals && wasntBeSupressed)
+					{
+						edgeImage[index] = 0;
+					}
+					else
+					{
+						edgeImage[index] = 255;
+					}
+				}
+			}
+		}
+		
 	}
 };
 }

@@ -12,6 +12,7 @@ class Filter
 		Filter(BYTE*, int, int);
 		~Filter();
 		BYTE* filtering(BYTE mask[]);
+		BYTE* filtering(double mask[]);
 		BYTE* dilation(BYTE mask[]);
 		BYTE* erosion(BYTE mask[]);
 		void updateIMG(BYTE*);

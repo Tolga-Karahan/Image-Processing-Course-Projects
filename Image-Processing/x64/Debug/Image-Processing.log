@@ -1,0 +1,15 @@
+﻿  MyForm.cpp
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(360): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(362): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(379): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(381): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(464): warning C4244: 'initializing': conversion from 'double' to 'BYTE', possible loss of data
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(484): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(486): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(525): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(527): warning C4018: '<': signed/unsigned mismatch
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(538): warning C4101: 'buffer': unreferenced local variable
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(725): warning C4838: conversion from 'int' to 'BYTE' requires a narrowing conversion
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(729): warning C4838: conversion from 'int' to 'BYTE' requires a narrowing conversion
+c:\users\tolga\source\repos\image-processing\image-processing\MyForm.h(738): warning C4244: '=': conversion from 'double' to 'BYTE', possible loss of data
+  Image-Processing.vcxproj -> C:\Users\Tolga\source\repos\Image-Processing\x64\Debug\Image-Processing.exe

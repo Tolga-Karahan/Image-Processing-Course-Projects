@@ -17,6 +17,8 @@ public:
 	Segmentation(BYTE* img, int width, int height, bool isEuclidean);
 	~Segmentation();
 	int getThreshold();
+	BYTE* KThresholding(int);
+	int findMin(int*, int);
 	BYTE* doSegmentation();
 	int getSD(int distance[], int threshold, int label);
 	int getMD(int sd, int threshold, int value);

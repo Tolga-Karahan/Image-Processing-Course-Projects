@@ -50,6 +50,36 @@ BYTE* Filter::filtering(BYTE mask[])
 	return buffer;
 }
 
+BYTE* Filter::filtering(double mask[])
+{
+	BYTE* buffer = new BYTE[width * height];
+
+	for (int row = 1; row < (height - 1); row++)
+	{
+		for (int column = 1; column < (width - 1); column++)
+		{
+			double result = 0;
+			// resmin mask matrisine denk gelen ilk indisi
+			int firstIndex = (row * width + column) - width - 1;
+
+			for (int i = 0; i < 3; i++)
+			{
+				for (int j = 0; j < 3; j++)
+				{
+					result += img[firstIndex] * mask[(i * 3) + j];
+					firstIndex++;
+				}
+				// bir sonraki satýrýn ilk indisini al
+				firstIndex += width - 3;
+			}
+			// Sonucu merkez piksele koy
+			buffer[(row * width) + column] = round(result);
+		}
+	}
+
+	return buffer;
+}
+
 BYTE* Filter::dilation(BYTE mask[])
 {
 	BYTE* buffer = new BYTE[width * height];
